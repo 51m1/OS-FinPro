@@ -1,3 +1,6 @@
+Basic Kernel
+==========
+
 The final product of this project is a simple kernel written in c and x86 Assembly capable of supplying text on the screen, with soma basic extra features
 that can be run either by using an emulator (such as qemu) or on real hardware.
 
@@ -7,7 +10,11 @@ and RAM memories.
 The first step for creating a kernel is to build a cross-compiler, which will allow us to compile and link code, this is very important because
 before this step is taken care of we cant do anything, since a standard C compiler won’t understand how to generate the machine code we need. 
 
-To aid us in this first step we follow the instructions provided this link:        https://hastebin.com/imasobixop.bash 
+To aid us in this first step we follow the instructions provided this link:  
+
+´´´
+      https://hastebin.com/imasobixop.bash 
+´´´
 
 This list of commands helped us install dependencies, create temporal data, define environment variables, to build binutils and to build a custome gcc.
 
@@ -19,6 +26,8 @@ executable will be stitched together.
 
 For the next stepwe have to compile the code within the files we created. This can be acomplished with  this commands:
 
+´´´
+
 	i686-elf-gcc -std=gnu99 -ffreestanding -g -c start.s -o start.o
 
 	i686-elf-gcc -std=gnu99 -ffreestanding -g -c kernel.c -o kernel.o
@@ -28,13 +37,22 @@ For the next stepwe have to compile the code within the files we created. This c
 	i686-elf-gcc -ffreestanding -nostdlib -g -T linker.ld start.o kernel.o -o mykernel.elf -lgcc
 
 	//Links the previously compliled files and creates a OS image.
+´´´
 
-For the three commands above to work, this line must be introduced first:        export PATH="$HOME/opt/cross/bin:$PATH"
+For the three commands above to work, this line must be introduced first: 
+
+´´´
+       export PATH="$HOME/opt/cross/bin:$PATH"
+´´´
 
 After this, using the SO image created by the last command (mykernel.elf), we can run the kernel. To run the kernel we need to install virtualizarion software
 such as VirtualBox or Qemu. We opted for Qemu (and we suggest you do as well).
 
-To run the iso using qemu the following command is used:    qemu-system-i386 -kernel mykernel.elf
+To run the iso using qemu the following command is used:
+
+´´´
+    qemu-system-i386 -kernel mykernel.elf
+´´´
 
 The additional feature that we decided to add to the kernel is the color support one. The color of both the text and the background of the kernel is selected
 in a variable within the kernel.c file, using a hexadecimal 8 bit number. After the welcoming message of the kernel a sample of every color combination 
